@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "packet.h"
+#include "packetnetwork.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,16 +16,20 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+signals:
+    void sendPacket(Packet *sendpacket);
 private slots:
-    void on_pushButton_2_clicked();
-
     void on_pushButton_3_clicked();
 
     QString ascTohex(QByteArray array);
 
+    void on_sendBtn_clicked();
+
+    void on_packetASCIIEdit_editingFinished();
+    void on_packetASCIIEdit_lostFocus();
 private:
     Ui::MainWindow *ui;
+    PacketNetwork packetNetwork;
     QString myIP = "1.2.3.4";
     int myPort = 1234;
     struct packet{
